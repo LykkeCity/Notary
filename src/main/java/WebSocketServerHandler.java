@@ -19,6 +19,10 @@ import io.netty.handler.codec.http.websocketx.WebSocketServerHandshaker;
 import io.netty.handler.codec.http.websocketx.WebSocketServerHandshakerFactory;
 import io.netty.util.CharsetUtil;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+
 import static io.netty.handler.codec.http.HttpHeaders.Names.*;
 import static io.netty.handler.codec.http.HttpMethod.*;
 import static io.netty.handler.codec.http.HttpResponseStatus.*;
@@ -47,6 +51,21 @@ public class WebSocketServerHandler extends SimpleChannelInboundHandler<Object> 
         ctx.flush();
     }
 
+    private String gethtml(){
+        StringBuilder contentBuilder = new StringBuilder();
+        try {
+            BufferedReader in = new BufferedReader(new FileReader("./html/index.html"));
+            String str;
+            while ((str = in.readLine()) != null) {
+                contentBuilder.append(str);
+            }
+            in.close();
+        } catch (IOException e) {
+        }
+        String content = contentBuilder.toString();
+        return content;
+    }
+
     private void handleHttpRequest(ChannelHandlerContext ctx, FullHttpRequest req) {
         // Handle a bad request.
         if (!req.getDecoderResult().isSuccess()) {
@@ -62,11 +81,12 @@ public class WebSocketServerHandler extends SimpleChannelInboundHandler<Object> 
 
         // Send the demo page and favicon.ico
         if ("/".equals(req.getUri())) {
-            ByteBuf content = WebSocketServerIndexPage.getContent(getWebSocketLocation(req));
-            FullHttpResponse res = new DefaultFullHttpResponse(HTTP_1_1, OK, content);
+            //ByteBuf content = WebSocketServerIndexPage.getContent(getWebSocketLocation(req));
+            String content = gethtml();
+            FullHttpResponse res = new DefaultFullHttpResponse(HTTP_1_1, OK, Unpooled.copiedBuffer(content.getBytes()));
 
             res.headers().set(CONTENT_TYPE, "text/html; charset=UTF-8");
-            HttpHeaders.setContentLength(res, content.readableBytes());
+            HttpHeaders.setContentLength(res, content.length());
 
             sendHttpResponse(ctx, req, res);
             return;
