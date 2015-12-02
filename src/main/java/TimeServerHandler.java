@@ -7,13 +7,6 @@ import io.netty.channel.ChannelHandlerContext;
 
 import java.util.Date;
 
-/**
- * Project: Shamrock Web Portal.
- * User: Constantine Solovev
- * Date: 16.04.15
- * Time: 10:44
- */
-
 public class TimeServerHandler extends ChannelHandlerAdapter {
 
     @Override // when a connection is established and ready to generate traffic

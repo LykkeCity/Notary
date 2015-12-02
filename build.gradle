@@ -1,0 +1,27 @@
+group 'soa'
+version '1.0-SNAPSHOT'
+
+apply plugin: "idea"
+apply plugin: 'java'
+
+sourceCompatibility = 1.8
+
+
+repositories {
+    mavenCentral()
+}
+
+version = "0.1"
+
+ext {
+    javaVersion = 1.8
+}
+
+
+sourceCompatibility = javaVersion
+targetCompatibility = javaVersion
+
+
+dependencies {
+    compile 'io.netty:netty-all:5.0.0.Alpha2'
+}
