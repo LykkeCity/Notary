@@ -47,3 +47,21 @@ task runws(type: JavaExec) {
     main = "WebSocketServer"
     classpath = sourceSets.main.runtimeClasspath
 }
+
+def distdir = new File(".")
+def mainclass = "WebSocketServer.java"
+
+task NotaryJar(type: Jar) {
+    archiveName "notary.jar"
+    destinationDir = distdir
+    from(configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }) {
+        exclude 'META-INF/MANIFEST.MF'
+        exclude 'META-INF/*.SF'
+        exclude 'META-INF/*.DSA'
+        exclude 'META-INF/*.RSA'
+    }
+    manifest {
+        attributes 'Main-Class': mainclass
+    }
+    with jar
+}
