@@ -5,11 +5,12 @@
 
 (defmacro with-test-interp [& body]
   `(base/with-interpreter
-     ;{:libpaths ["test/clojure_python/"]}
      {:libpaths ["src/py/"]}
      ~@body))
 
-(defn -main []
+(defn demo-interop
+  "demontsrate interop"
+  []
   (println "main")
   (with-test-interp
     (base/py-import-lib example)
@@ -19,3 +20,6 @@
     (println (calc 2)))
   (Testing/ja)
   (println "main end"))
+
+(defn -main []
+  (demo-interop))
