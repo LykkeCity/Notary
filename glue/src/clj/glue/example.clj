@@ -1,7 +1,8 @@
-(ns cljpy.example
+(ns glue.example
   (:require [midje.sweet :refer :all]
             [cljpy.core :as base])
-  (:import Testing))
+  (:import Testing)
+  (:import Base58))
 
 (defmacro with-test-interp [& body]
   `(base/with-interpreter
@@ -10,7 +11,7 @@
      ~@body))
 
 (defn -main []
-  (println "main")
+  (println "--main--")
   (with-test-interp
     (base/py-import-lib example)
     (base/import-fn example hello)
@@ -18,4 +19,5 @@
     (println (hello "world"))
     (println (calc 2)))
   (Testing/ja)
-  (println "main end"))
+  (println (Base58/encode (.getBytes "test")))
+  (println "--main end--"))
