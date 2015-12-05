@@ -1,5 +1,8 @@
 """
 example how to send from one brainwallet to another
+
+13TZJXS5w6NoFUn9vwDJgMBDnTh2CQAz8Y
+15mfUNVsf1WUAbgvv5NfWsAbGheyHt5M3L
 """
 
 from bitcoin import *
@@ -10,22 +13,74 @@ def getwallet(pw):
     pub = privtopub(priv)
     addr = pubtoaddr(pub)
     h = history(addr)
-    return {'priv':priv, 'pub':pub, 'addr':addr, 'hist':h}
+    unspent = bci_unspent(addr)
+    balance = calc_total(h)
+    return {'priv':priv, 'pub':pub, 'addr':addr, 'hist':h, 'unspent': unspent, 'balance':balance}
 
+def calc_total(h):
+    total = 0
+    for x in h:
+        v = x['value']
+        total += v
+    return total
 
 wallet1 = getwallet('Lykkex1')
 wallet2 = getwallet('Lykkex2')
 print 'Lykkex1\n',wallet1
 print 'Lykkex2\n',wallet2
 
-#from wallet1 to wallet2
-outs = [{'value': 9000, 'address': wallet2['addr']}]
-tx = mktx(wallet1['hist'],outs)
-print tx
+#========================================
+#print tx
 #sign first input
-tx2 = sign(tx,0,wallet1['priv'])
-print tx2
-print pushtx(tx2)
+#tx2 = sign(tx,0,wallet1['priv'])
+#rint tx2
+
+#from wallet1 to wallet2
+fromaddr = wallet2['addr']
+
+outs = list()
+towallet = wallet1
+fromwallet = wallet2
+
+h = history(fromwallet['addr'])
+#print h
+totalout = calc_total(h)
+#print totalout
+
+unspent = bci_unspent(fromwallet['addr'])
+
+#spend the first output
+spendoutput = unspent[0]
+#print spendoutput
+
+outval = spendoutput['value'] #totalout
+outs = [{'value': outval, 'address': towallet['addr']}]
+
+tx = mktx(spendoutput,outs)
+signedtx = sign(tx,0,fromwallet['priv'])
+
+#print bci_pushtx(signedtx)
+
+#tx = mktx(fromwallet['hist'],outs)
+
+
+"""
+for o in bci_unspent(fromwallet):
+    print o
+    outs.append({'value': o['value'], 'address': toaddr})
+"""
+#list of previous outputs as new inputs
+"""
+inputindex = 0
+txall = None
+pkey = wallet1['priv']
+for newinput in outs:
+    sign(tx,inputindex,pkey)
+    inputindex+=1
+"""
+
+#sign(tx,0,wallet2['priv'])
+
 
 """
 ======
