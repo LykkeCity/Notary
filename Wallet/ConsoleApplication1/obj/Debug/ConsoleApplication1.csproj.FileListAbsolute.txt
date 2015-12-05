@@ -1,0 +1,16 @@
+c:\users\benjyz\Wallet\Wallet\ConsoleApplication1\bin\Debug\ConsoleApplication1.exe.config
+c:\users\benjyz\Wallet\Wallet\ConsoleApplication1\bin\Debug\ConsoleApplication1.exe
+c:\users\benjyz\Wallet\Wallet\ConsoleApplication1\bin\Debug\ConsoleApplication1.pdb
+c:\users\benjyz\Wallet\Wallet\ConsoleApplication1\bin\Debug\NBitcoin.BouncyCastle.dll
+c:\users\benjyz\Wallet\Wallet\ConsoleApplication1\bin\Debug\NBitcoin.dll
+c:\users\benjyz\Wallet\Wallet\ConsoleApplication1\bin\Debug\Newtonsoft.Json.dll
+c:\users\benjyz\Wallet\Wallet\ConsoleApplication1\bin\Debug\protobuf-net.dll
+c:\users\benjyz\Wallet\Wallet\ConsoleApplication1\bin\Debug\NBitcoin.pdb
+c:\users\benjyz\Wallet\Wallet\ConsoleApplication1\bin\Debug\NBitcoin.xml
+c:\users\benjyz\Wallet\Wallet\ConsoleApplication1\bin\Debug\NBitcoin.BouncyCastle.pdb
+c:\users\benjyz\Wallet\Wallet\ConsoleApplication1\bin\Debug\Newtonsoft.Json.xml
+c:\users\benjyz\Wallet\Wallet\ConsoleApplication1\bin\Debug\protobuf-net.pdb
+c:\users\benjyz\Wallet\Wallet\ConsoleApplication1\bin\Debug\protobuf-net.xml
+c:\users\benjyz\Wallet\Wallet\ConsoleApplication1\obj\Debug\ConsoleApplication1.csprojResolveAssemblyReference.cache
+c:\users\benjyz\Wallet\Wallet\ConsoleApplication1\obj\Debug\ConsoleApplication1.exe
+c:\users\benjyz\Wallet\Wallet\ConsoleApplication1\obj\Debug\ConsoleApplication1.pdb

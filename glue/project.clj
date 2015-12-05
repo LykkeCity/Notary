@@ -9,7 +9,7 @@
   :source-paths      ["src/clj"]
   :java-source-paths ["src/java"]
 
-  :main cljpy.example
+  :main glue.example
 
 
 )
