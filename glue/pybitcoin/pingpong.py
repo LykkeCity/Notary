@@ -6,6 +6,7 @@ example how to send from one brainwallet to another
 """
 
 from bitcoin import *
+from send import *
 
 fee = 10000
 
@@ -19,56 +20,23 @@ def getwallet(password):
     balance = calc_total(unspent)
     return {'priv':priv, 'pub':pub, 'addr':addr, 'hist':h, 'unspent': unspent, 'balance':balance}
 
-def calc_total(h):
-    total = 0
-    for x in h:
-        v = x['value']
-        total += v
-    return total
+def print_balance():
+    import time
+    while True:
+        wallet1 = getwallet('Lykkex1')
+        wallet2 = getwallet('Lykkex2')
+        print 'Lykkex1 : ',wallet1['addr'], ' ',wallet1['balance']
+        print 'Lykkex2 : ',wallet2['addr'], ' ',wallet2['balance']
 
-def sendbtc(fromwallet, towallet):
-    outs = list()
-    fromwallet = wallet1
-    towallet = wallet2
+        time.sleep(10)
 
-    unspent = bci_unspent(fromwallet['addr'])
-    #spend the first output
-    inputindex = 0
-    print unspent
-    spendoutput = unspent[inputindex]
-    #print spendoutput
-
-    outval = spendoutput['value'] - fee #totalout
-    outs = [{'value': outval, 'address': towallet['addr']}]
-    print outs
-    tx = mktx(spendoutput,outs)
-    signedtx = sign(tx,0,fromwallet['priv'])
-    print signedtx
-    #print bci_pushtx(signedtx)
-
-    #tx = mktx(fromwallet['hist'],outs)
-    #TODO: gather all outputs from the address
-
-    """
-    for o in bci_unspent(fromwallet):
-        print o
-        outs.append({'value': o['value'], 'address': toaddr})
-    """
-    #list of previous outputs as new inputs
-    """
-    inputindex = 0
-    txall = None
-    pkey = wallet1['priv']
-    for newinput in outs:
-        sign(tx,inputindex,pkey)
-        inputindex+=1
-    """
-
-
-if __name__ =='__main__':
+def print_wallets():
     wallet1 = getwallet('Lykkex1')
     wallet2 = getwallet('Lykkex2')
-    #print 'Lykkex1\n',wallet1
-    #print 'Lykkex2\n',wallet2
+    print 'Lykkex1: ',wallet1
+    print 'Lykkex2: ',wallet2
     print '========================================'
-    sendbtc(wallet1, wallet2)
+
+if __name__ =='__main__':
+    print_balance()
+    #sendbtc(wallet2, wallet1)
