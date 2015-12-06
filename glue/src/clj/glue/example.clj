@@ -23,6 +23,6 @@
   (println "main end"))
 
 (defn -main []
-  (demo-interop))
+  (demo-interop)
   (println (Base58/encode (.getBytes "test")))
   (println "--main end--"))
