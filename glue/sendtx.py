@@ -19,9 +19,10 @@ if cmd_subfolder not in sys.path:
     sys.path.insert(0, cmd_subfolder)
 #end ackward path import
 
-import bitcoin
-import bitcoin.transaction
-
+import pybitcoin
+import pybitcoin.transaction
+import pybitcoin.main
+import pybitcoin.bci
 
 fee = 10000
 
@@ -31,6 +32,36 @@ def calc_total(h):
         v = x['value']
         total += v
     return total
+
+def sendself(wallet):
+    """send all money from the address to itself"""
+    unspent = wallet['unspent']
+    print unspent
+    inputindex = 0
+    spendoutput = unspent[inputindex]
+    txval = spendoutput['value']
+    outval = txval - fee
+    outs = [{'value': outval, 'address': wallet['addr']}]
+    tx = pybitcoin.transaction.mktx(spendoutput,outs)
+    signedtx = pybitcoin.transaction.sign(tx,0,wallet['priv'])
+    print signedtx
+    print bitcoin.bci.bci_pushtx(signedtx)
+
+def sendselftwo(wallet):
+    """send all money from the address to itself in two tx"""
+    unspent = wallet['unspent']
+    print unspent
+    inputindex = 0
+    spendoutput = unspent[inputindex]
+    txval = spendoutput['value']
+    outval1 = (txval/2) - fee
+    outval2 = txval -outval1 - fee
+    outs = [{'value': outval1, 'address': wallet['addr']},{'value': outval2, 'address': wallet['addr']}]
+    print outs
+    tx = pybitcoin.transaction.mktx(spendoutput,outs)
+    signedtx = pybitcoin.transaction.sign(tx,0,wallet['priv'])
+    print signedtx
+    #print bitcoin.bci.bci_pushtx(signedtx)
 
 def sendbtc(fromwallet, towallet):
     outs = list()
@@ -49,8 +80,8 @@ def sendbtc(fromwallet, towallet):
             {'value': totalval - outval - fee, 'address': fromwallet['addr']}]
 
     print outs
-    tx = bitcoin.transaction.mktx(spendoutput,outs)
-    signedtx = bitcoin.transaction.sign(tx,0,fromwallet['priv'])
+    tx = pybitcoin.transaction.mktx(spendoutput,outs)
+    signedtx = pybitcoin.transaction.sign(tx,0,fromwallet['priv'])
     print signedtx
     #print bci_pushtx(signedtx)
 

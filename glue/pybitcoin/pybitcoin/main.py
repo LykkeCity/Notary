@@ -10,7 +10,7 @@ import base64
 import time
 import random
 import hmac
-from bitcoin.ripemd import *
+from .ripemd import *
 
 # Elliptic curve parameters (secp256k1)
 
@@ -478,7 +478,7 @@ def is_address(addr):
 
 def encode_sig(v, r, s):
     vb, rb, sb = from_int_to_byte(v), encode(r, 256), encode(s, 256)
-    
+
     result = base64.b64encode(vb+b'\x00'*(32-len(rb))+rb+b'\x00'*(32-len(sb))+sb)
     return result if is_python2 else str(result, 'utf-8')
 
@@ -519,7 +519,7 @@ def ecdsa_raw_sign(msghash, priv):
 def ecdsa_sign(msg, priv):
     v, r, s = ecdsa_raw_sign(electrum_sig_hash(msg), priv)
     sig = encode_sig(v, r, s)
-    assert ecdsa_verify(msg, sig, 
+    assert ecdsa_verify(msg, sig,
         privtopub(priv)), "Bad Sig!\t %s\nv = %d\n,r = %d\ns = %d" % (sig, v, r, s)
     return sig
 

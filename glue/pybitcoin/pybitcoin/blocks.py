@@ -1,5 +1,4 @@
-from bitcoin.main import *
-
+from .main import *
 
 def serialize_header(inp):
     o = encode(inp['version'], 256, 4)[::-1] + \

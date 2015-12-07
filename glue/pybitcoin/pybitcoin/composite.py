@@ -1,8 +1,8 @@
-from bitcoin.main import *
-from bitcoin.transaction import *
-from bitcoin.bci import *
-from bitcoin.deterministic import *
-from bitcoin.blocks import *
+from .main import *
+from .transaction import *
+from .bci import *
+from .deterministic import *
+from .blocks import *
 
 
 # Takes privkey, address, value (satoshis), fee (satoshis)

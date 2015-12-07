@@ -2,6 +2,8 @@
 example how to send from one brainwallet to another
 
 13TZJXS5w6NoFUn9vwDJgMBDnTh2CQAz8Y
+16f9c43035061fda0fd54817d0ce075eaeec0cc6ba1e4e3ff207fbc847b3afd0
+
 15mfUNVsf1WUAbgvv5NfWsAbGheyHt5M3L
 """
 
@@ -21,9 +23,9 @@ if cmd_subfolder not in sys.path:
     sys.path.insert(0, cmd_subfolder)
 #end ackward path import
 
-import bitcoin
-import bitcoin.main
-import bitcoin.bci
+import pybitcoin
+import pybitcoin.main
+import pybitcoin.bci
 
 
 #from bitcoin import *
@@ -35,11 +37,11 @@ fee = 10000
 
 def getwallet(password):
     """ simple brainwallet structure """
-    priv = bitcoin.main.sha256(password)
-    pub = bitcoin.main.privtopub(priv)
-    addr = bitcoin.main.pubtoaddr(pub)
-    h = bitcoin.bci.history(addr)
-    unspent = bitcoin.bci.bci_unspent(addr)
+    priv = pybitcoin.main.sha256(password)
+    pub = pybitcoin.main.privtopub(priv)
+    addr = pybitcoin.main.pubtoaddr(pub)
+    h = pybitcoin.bci.history(addr)
+    unspent = pybitcoin.bci.bci_unspent(addr)
     balance = calc_total(unspent)
     return {'priv':priv, 'pub':pub, 'addr':addr, 'hist':h, 'unspent': unspent, 'balance':balance}
 
@@ -65,6 +67,11 @@ if __name__ =='__main__':
     wallet1 = getwallet('Lykkex1')
     wallet2 = getwallet('Lykkex2')
     wallet3 = getwallet('Lykkex3')
-    sendbtc(wallet1, wallet3)
+    print wallet1
+    print wallet2
+    print wallet3
 
+    #sendselftwo(wallet1)
+    #sendbtc(wallet1, wallet2)
+    #print wallet1
     #print wallet3
